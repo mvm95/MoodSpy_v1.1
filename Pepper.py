@@ -73,7 +73,7 @@ class GoNogo(object):
     movement_list = ['rightUp', 'rightDown', 'leftUp', 'leftDown']
     choice = random.randint(0,3)
     movement = movement_list[choice]
-    print movement
+    print(movement)
     self.get_behavior(movement)
     movement = MOVEMENT_DICTIONARY[movement]
     return movement
@@ -165,7 +165,7 @@ class GoNogo(object):
     self.read_state()
     first_istance = True
     with self.pepper_lock:
-      print 'Connected'
+      print('Connected')
       text = 'Pepper connect at ' + str(get_timestamp()) + '\n'
       self.write(text)
       try:
@@ -204,7 +204,7 @@ class GoNogo(object):
         self.write('------------------------- \n')
         self.behavior.stopAllBehaviors()
         self.get_behavior('blue') 
-        print 'Done'
+        print('Done')
   
 def main():
     gonogo = GoNogo(test=True)
