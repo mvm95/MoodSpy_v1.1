@@ -1,0 +1,10 @@
+******* Class description *********
+
+0 - Fully Stop
+1 - Is Moving
+2 - Is Stopping
+3 - Stopped before starting again
+4 - Left Arm Up
+5 - Right Arm Up
+6 - Left Arm Down
+7 - Right Arm Down
