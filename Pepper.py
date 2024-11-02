@@ -1,7 +1,7 @@
 import sys
 sys.path.append('C:\Users\pynaoqi\lib')
 import qi
-from naoqi import ALProxy as Proxy
+# from naoqi import ALProxy as Proxy
 import time
 import argparse
 from datetime import datetime
