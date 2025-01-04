@@ -49,7 +49,7 @@ def process_subject_data(df):
     return pd.DataFrame(result)
 
 # Carica il file CSV
-file_path = 'stat/reaction_times.csv'
+file_path = 'stat/reaction_times_stop.csv'
 data = pd.read_csv(file_path)
 
 # Elabora i dati
@@ -60,7 +60,7 @@ processed_data = processed_data[columns]
 processed_data = processed_data.applymap(lambda x: f'{x:.3f}' if isinstance(x, float) else x)
 
 # Salva i dati elaborati in un nuovo file CSV
-output_file = 'stat/subject_table.csv'
+output_file = 'stat/subject_table_stop.csv'
 processed_data.to_csv(output_file, index=False)
 
 print(f'File salvato come {output_file}')

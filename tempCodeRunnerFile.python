@@ -1,0 +1,79 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+class SelfOrganizingMap:
+    def __init__(self, input_dim, grid_size, learning_rate=0.5, radius=None, decay_rate=0.99):
+        """
+        Initializes the SOM.
+        :param input_dim: Dimensionality of input data.
+        :param grid_size: Tuple representing the size of the SOM grid (rows, cols).
+        :param learning_rate: Initial learning rate.
+        :param radius: Initial neighborhood radius.
+        :param decay_rate: Decay rate for learning rate and radius.
+        """
+        self.input_dim = input_dim
+        self.grid_size = grid_size
+        self.learning_rate = learning_rate
+        self.radius = radius or max(grid_size) / 2
+        self.decay_rate = decay_rate
+
+        # Initialize weight vectors for each node in the SOM grid
+        self.weights = np.random.random((grid_size[0], grid_size[1], input_dim))
+
+    def train(self, data, num_epochs):
+        """
+        Trains the SOM.
+        :param data: Input data (2D array: num_samples x input_dim).
+        :param num_epochs: Number of training epochs.
+        """
+        for epoch in range(num_epochs):
+            for sample in data:
+                bmu_idx = self.find_bmu(sample)
+                self.update_weights(sample, bmu_idx, epoch, num_epochs)
+            self.learning_rate *= self.decay_rate
+            self.radius *= self.decay_rate
+
+    def find_bmu(self, sample):
+        """
+        Finds the Best Matching Unit (BMU) for a given sample.
+        :param sample: Input sample (1D array).
+        :return: Tuple of BMU coordinates in the grid.
+        """
+        distances = np.linalg.norm(self.weights - sample, axis=2)
+        bmu_idx = np.unravel_index(np.argmin(distances), self.grid_size)
+        return bmu_idx
+
+    def update_weights(self, sample, bmu_idx, epoch, num_epochs):
+        """
+        Updates the weights of the SOM nodes.
+        :param sample: Input sample (1D array).
+        :param bmu_idx: Coordinates of the BMU.
+        :param epoch: Current epoch number.
+        :param num_epochs: Total number of epochs.
+        """
+        for x in range(self.grid_size[0]):
+            for y in range(self.grid_size[1]):
+                dist_to_bmu = np.linalg.norm(np.array([x, y]) - np.array(bmu_idx))
+                if dist_to_bmu <= self.radius:
+                    influence = np.exp(-dist_to_bmu**2 / (2 * (self.radius**2)))
+                    self.weights[x, y] += self.learning_rate * influence * (sample - self.weights[x, y])
+
+    def visualize(self):
+        """
+        Visualizes the SOM grid.
+        """
+        plt.imshow(self.weights.reshape(self.grid_size[0], self.grid_size[1], -1))
+        plt.title("Self-Organizing Map")
+        plt.show()
+
+# Example Usage
+if __name__ == "__main__":
+    # Generate some example data
+    data = np.random.random((100, 3))  # 100 samples of 3-dimensional data
+
+    # Initialize and train the SOM
+    som = SelfOrganizingMap(input_dim=3, grid_size=(10, 10), learning_rate=0.5)
+    som.train(data, num_epochs=100)
+
+    # Visualize the trained SOM
+    som.visualize()

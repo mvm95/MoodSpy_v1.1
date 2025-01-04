@@ -7,7 +7,7 @@ def boxplot():
     TASK_TYPE_MAP = {0: 'GONOGO_COMPUTER', 1: 'STROOP_TEST', 2: 'T1', 3: 'T3', 4: 'T2', 5: 'T2+T1'}
 
     # Leggi il file CSV
-    df = pd.read_csv('stat/reaction_times.csv')
+    df = pd.read_csv('stat/reaction_times_stop.csv')
 
     # Filtra i dati in base ai valori di TYPE_OF_TASK
     tasks = [2, 3, 4, 5]
@@ -132,5 +132,6 @@ def histogram():
         plt.savefig(f'stat/histogram_{TASK_TYPE_MAP[type_task]}_movement.png')
         plt.clf()
 
+boxplot()
 histogram()
 

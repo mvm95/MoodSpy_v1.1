@@ -287,6 +287,8 @@ def acceleration_plot(path, frame, ax):
 
                 
 if __name__ == '__main__':
+    subject = 'IDU002'
+    group = 'Stop'
     # update_label_file(1, -4, 2, 'IDU010V010')
     # file = "D:\Marco\IDU001\Movement\IDU001V001\BioHarness\ACC.csv".replace('\\','/')
     # timestamp = 1726670682498
@@ -294,7 +296,7 @@ if __name__ == '__main__':
     # ax = figure.add_subplot(111)
     # figureModuleAcc(file, timestamp, ax)
     # plt.show()
-    path = "D:/Marco/IDU015/Stop/IDU0152V001/RealSense/IDU015.bag"
+    path = f"D:/Marco/{subject}/{group}/{subject}V001/RealSense/{subject}.bag"
     path = path.replace('\\', '/')
     actions = extract_actions_from_path(path)
     action_to_consider = []
@@ -305,9 +307,9 @@ if __name__ == '__main__':
     # print(action_to_consider)
     print(len(action_to_consider))
     count = 0
-    video_path = 'D:/Marco/IDU015/Stop/'
+    video_path = f'D:/Marco/{subject}/{group}/'
     video_list = sorted([video for video in os.listdir(video_path) if 'V0' in video])
-    bagname = 'IDU015.bag'
+    bagname = f'{subject}.bag'
     video_log = os.path.join(video_path, 'Log_files', 'Connection_log.txt')
     with open(video_log, 'r' ) as f:
         lines = f.readlines()

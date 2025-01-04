@@ -1,5 +1,5 @@
 import sys
-sys.path.append('C:\Users\pynaoqi\lib')
+sys.path.append('C:\pynaoqi\lib')
 import qi
 # from naoqi import ALProxy as Proxy
 import time
